@@ -1,0 +1,50 @@
+# Default values for cloudbeaver-te.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# cloudbeaver general values for all TE services
+cloudbeaver:
+  imageTag: "23.3.0"
+  pullPolicy: Always
+  # pullCredsName - name of a secret config map that contains docker repo auths
+  # pullCredsName: regcred
+
+# Ingress Values
+# Supported ingress controllers: nginx, haproxy
+ingressController: haproxy
+# Domain name for ingress endpoint
+cloudbeaverBaseDomain: "cloudbeaver.local"
+# LoadBallancer secure mode. Possible values - http, https
+httpScheme: http
+# If httpScheme is https.
+# Domain certificates must be presented in root folder of chart with names:
+httpsCertPath: "ingressSsl"
+# certificate: <httpsCertPath>/fullchain.pem
+# certificate key: <httpsCertPath>/privkey.pem
+
+
+crossServiceCertPath: "crossSsl"
+secretCertPath: "secretSsl"
+# Service depend values
+cloudbeaverTE:
+  replicaCount: 1
+  image: dbeaver/cloudbeaver-te
+cloudbeaverDC:
+  replicaCount: 1
+  image: dbeaver/cloudbeaver-dc
+cloudbeaverRM:
+  replicaCount: 1
+  image: dbeaver/cloudbeaver-rm
+cloudbeaverQM:
+  replicaCount: 1
+  image: dbeaver/cloudbeaver-qm
+cloudbeaverTM:
+  replicaCount: 1
+  image: dbeaver/cloudbeaver-tm  
+
+backend:
+  internal_db: true
+  cloudbeaver_db_driver: postgres-jdbc
+  cloudbeaver_db_url: jdbc:postgresql://postgres:5432/cloudbeaver
+  cloudbeaver_db_user: postgres
+  cloudbeaver_db_password: StR0NgP2sSw0rD
